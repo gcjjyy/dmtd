@@ -2,12 +2,13 @@
 
 도스박물관 레트로 타워 디펜스 게임
 
-<img width="752" height="540" alt="dmtd_1" src="https://github.com/user-attachments/assets/14e13b00-6a0c-4159-92c7-e76defde689a" />
-<img width="752" height="540" alt="dmtd_2" src="https://github.com/user-attachments/assets/1c82ef60-ec46-471b-87f8-fc6166da098e" />
-<img width="752" height="540" alt="dmtd_3" src="https://github.com/user-attachments/assets/736718f7-e729-4e77-8c84-5bc2e9b04996" />
-<img width="752" height="540" alt="Screenshot 2025-09-18 at 16 41 39" src="https://github.com/user-attachments/assets/da13fbd4-009e-41b0-a2bf-62eb5cf3cabf" />
-<img width="752" height="540" alt="Screenshot 2025-09-18 at 16 51 44" src="https://github.com/user-attachments/assets/af9450f8-3731-4ba1-a8db-9aa70d78ad5e" />
-<img width="752" height="540" alt="Screenshot 2025-09-18 at 16 53 29" src="https://github.com/user-attachments/assets/3342daf7-38de-46ac-811e-4d6e0b4d3557" />
+<img width="640" height="400" alt="Screenshot 2025-09-18 at 1<img width="640" height="400" alt="dmtd_1" src="https://github.com/user-attachments/assets/73f3f3e7-8013-48be-9a5a-9c3dc4842a8c" />
+6 51 44" src="https://github.com/user-attachments/assets/803c733c-d0b4-4866-8b1b-4083deef3217" /><img width="640" height="400" alt="dmtd_2" src="https://github.com/user-attachments/assets/8e9c54f4-5de9-4d36-bc3f-57ffde346154" />
+<img width="640" height="400" alt="dmtd_3" src="https://github.com/user-attachments/assets/2dc7be37-02bb-4dc4-8053-ed1d0ef02db8" />
+<img width="640" height="400" alt="Screenshot 2025-09-18 at 16 41 39" src="https://github.com/user-attachments/assets/f882f464-1619-4ea8-a0f8-8a4ff9aa5e9a" />
+
+<img width="640" height="400" alt="Screenshot 2025-09-18 at 16 53 29" src="https://github.com/user-attachments/assets/11212063-a009-4ccf-b2f1-eeed6217ea44" />
+
 
 
 ## 게임 소개
