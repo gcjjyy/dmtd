@@ -21,10 +21,10 @@ public:
     virtual int isEnemy() const = 0;     // Type identifier
 };
 
-#define MAX_ENEMIES 50
-#define MAX_TURRETS 200
-#define MAX_BULLETS 100
-#define MAX_EXPLOSIONS 30
+#define MAX_ENEMIES 30      // Reduced from 50 for memory optimization
+#define MAX_TURRETS 100     // Reduced from 200 for memory optimization
+#define MAX_BULLETS 50      // Reduced from 100 for memory optimization
+#define MAX_EXPLOSIONS 15   // Reduced from 30 for memory optimization
 #define TILE_SIZE 16
 #define GRID_START_X 0
 #define GRID_START_Y 24
@@ -197,6 +197,19 @@ extern int CURRENT_DIFFICULTY;
 // 로그 시스템
 extern int gIsLogEnabled;
 void writeLog(const char* message);
+
+// 메모리 모니터링 시스템
+typedef struct {
+    unsigned long available_memory;
+    unsigned long used_memory;
+    unsigned long largest_free_block;
+    int critical_threshold_reached;
+} MemoryInfo;
+
+void checkMemoryStatus(MemoryInfo* info);
+void logMemoryStatus();
+int isMemoryCritical();
+void freeUnusedResources();
 
 float getGameTime();
 float getDeltaTime();

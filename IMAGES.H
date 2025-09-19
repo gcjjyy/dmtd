@@ -13,6 +13,12 @@
 void InitGameImages();
 void FreeGameImages();
 
+// Lazy loading functions for memory optimization
+void InitCoreImages();      // Load only essential UI/menu images
+void LoadStageImages(int stage);  // Load images for specific stage
+void UnloadStageImages();   // Free stage-specific images
+void UnloadImage(sprites* img);   // Free individual image
+
 // Image getter functions
 sprites* GetBulletImage(int type);  // type: 1-7 for BULLET1.PCX~BULLET7.PCX
 sprites* GetTurretImage(int type);  // type: TURRET_525, TURRET_XT, etc.

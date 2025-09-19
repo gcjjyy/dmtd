@@ -24,7 +24,6 @@ GameManager::~GameManager() {
 
 void GameManager::init() {
     // 전역 이미지 시스템 초기화
-    Load_Pal("dmtd.pal");
     InitGameImages();
     
     
@@ -1222,6 +1221,16 @@ void GameManager::drawStageIntro() {
 }
 
 void GameManager::setupStage(int stageNum) {
+    // 메모리 최적화: 스테이지별 이미지 로딩
+    LoadStageImages(stageNum - 1);  // 스테이지는 1부터 시작하지만 배열은 0부터
+    logMemoryStatus();  // 메모리 상태 체크
+
+    // 메모리 부족 시 리소스 정리
+    if (isMemoryCritical()) {
+        freeUnusedResources();
+        logMemoryStatus();
+    }
+
     // 스테이지별 적 수 설정 (10개부터 시작해서 20개까지 증가)
     // 1단계: 10명, 20단계: 20명
     enemies_per_stage = 10 + ((stageNum - 1) * 10) / 19;

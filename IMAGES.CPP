@@ -18,6 +18,232 @@ static sprites turret_select_image;
 
 // Initialization flags
 static int images_initialized = 0;
+static int current_loaded_stage = -1;  // Track which stage images are loaded
+
+// Memory-optimized initialization - load only core images
+void InitCoreImages() {
+    int i;
+
+    if (images_initialized) return;
+
+    // Initialize all image pointers to NULL
+    for (i = 0; i < MAX_BULLET_TYPES; i++) {
+        bullet_images[i].image = NULL;
+    }
+    for (i = 0; i < MAX_TURRET_TYPES; i++) {
+        turret_images[i].image = NULL;
+    }
+    for (i = 0; i < MAX_ENEMY_STAGES; i++) {
+        enemy_images[i].image = NULL;
+    }
+    for (i = 0; i < MAX_EXPLOSION_FRAMES; i++) {
+        explosion_images[i].image = NULL;
+    }
+    for (i = 0; i < MAX_DIALOG_PATCHES; i++) {
+        dialog_images[i].image = NULL;
+    }
+
+    // Load only essential UI images
+    coin_image.image = NULL;
+    Load_Pcx("COIN.PCX", &coin_image);
+    if (coin_image.image) {
+        Decode_Data(&coin_image);
+    }
+
+    // Load cursor images
+    turret_cursor_image.image = NULL;
+    map_cursor_image.image = NULL;
+    map_cursor2_image.image = NULL;
+    Load_Pcx("TCURSOR.PCX", &turret_cursor_image);
+    Load_Pcx("MCURSOR.PCX", &map_cursor_image);
+    Load_Pcx("MCURSOR2.PCX", &map_cursor2_image);
+
+    if (turret_cursor_image.image) {
+        Decode_Data(&turret_cursor_image);
+    }
+    if (map_cursor_image.image) {
+        Decode_Data(&map_cursor_image);
+    }
+    if (map_cursor2_image.image) {
+        Decode_Data(&map_cursor2_image);
+    }
+
+    // Load turret selection window
+    turret_select_image.image = NULL;
+    Load_Pcx("TURSEL.PCX", &turret_select_image);
+    if (turret_select_image.image) {
+        Decode_Data(&turret_select_image);
+    }
+
+    // Load dialog patches
+    Load_Pcx("DIALOG0.PCX", &dialog_images[0]);
+    Load_Pcx("DIALOG1.PCX", &dialog_images[1]);
+    Load_Pcx("DIALOG2.PCX", &dialog_images[2]);
+    Load_Pcx("DIALOG3.PCX", &dialog_images[3]);
+    Load_Pcx("DIALOG4.PCX", &dialog_images[4]);
+    Load_Pcx("DIALOG5.PCX", &dialog_images[5]);
+    Load_Pcx("DIALOG6.PCX", &dialog_images[6]);
+    Load_Pcx("DIALOG7.PCX", &dialog_images[7]);
+    Load_Pcx("DIALOG8.PCX", &dialog_images[8]);
+
+    for (i = 0; i < MAX_DIALOG_PATCHES; i++) {
+        if (dialog_images[i].image) {
+            Decode_Data(&dialog_images[i]);
+        }
+    }
+
+    // Load light and dark images
+    light_image.image = NULL;
+    dark_image.image = NULL;
+    Load_Pcx("LIGHT.PCX", &light_image);
+    Load_Pcx("DARK.PCX", &dark_image);
+
+    if (light_image.image) {
+        Decode_Data(&light_image);
+    }
+    if (dark_image.image) {
+        Decode_Data(&dark_image);
+    }
+
+    // Load DOS Museum background
+    dosmuseum_image.image = NULL;
+    Load_Pcx("DOSMUS.PCX", &dosmuseum_image);
+    if (dosmuseum_image.image) {
+        Decode_Data(&dosmuseum_image);
+    }
+
+    images_initialized = 1;
+}
+
+// Load images for specific stage
+void LoadStageImages(int stage) {
+    int i;
+
+    // Unload previous stage images if different stage
+    if (current_loaded_stage != -1 && current_loaded_stage != stage) {
+        UnloadStageImages();
+    }
+
+    // Don't reload if already loaded
+    if (current_loaded_stage == stage) return;
+
+    // Load bullet images if not loaded
+    if (bullet_images[0].image == NULL) {
+        Load_Pcx("BULLET1.PCX", &bullet_images[0]);
+        Load_Pcx("BULLET2.PCX", &bullet_images[1]);
+        Load_Pcx("BULLET3.PCX", &bullet_images[2]);
+        Load_Pcx("BULLET4.PCX", &bullet_images[3]);
+        Load_Pcx("BULLET5.PCX", &bullet_images[4]);
+        Load_Pcx("BULLET6.PCX", &bullet_images[5]);
+        Load_Pcx("BULLET7.PCX", &bullet_images[6]);
+
+        for (i = 0; i < MAX_BULLET_TYPES; i++) {
+            if (bullet_images[i].image) {
+                Decode_Data(&bullet_images[i]);
+            }
+        }
+    }
+
+    // Load turret images if not loaded
+    if (turret_images[TURRET_525].image == NULL) {
+        Load_Pcx("525.PCX", &turret_images[TURRET_525]);
+        Load_Pcx("XT.PCX", &turret_images[TURRET_XT]);
+        Load_Pcx("AT.PCX", &turret_images[TURRET_AT]);
+        Load_Pcx("35.PCX", &turret_images[TURRET_35]);
+        Load_Pcx("486.PCX", &turret_images[TURRET_486]);
+        Load_Pcx("CD.PCX", &turret_images[TURRET_CD]);
+        Load_Pcx("PENTIUM.PCX", &turret_images[TURRET_PENTIUM]);
+
+        for (i = 0; i < MAX_TURRET_TYPES; i++) {
+            if (turret_images[i].image) {
+                Decode_Data(&turret_images[i]);
+            }
+        }
+    }
+
+    // Load explosion images if not loaded
+    if (explosion_images[0].image == NULL) {
+        Load_Pcx("EXPLO1.PCX", &explosion_images[0]);
+        Load_Pcx("EXPLO2.PCX", &explosion_images[1]);
+        Load_Pcx("EXPLO3.PCX", &explosion_images[2]);
+        Load_Pcx("EXPLO4.PCX", &explosion_images[3]);
+        Load_Pcx("EXPLO5.PCX", &explosion_images[4]);
+
+        for (i = 0; i < MAX_EXPLOSION_FRAMES; i++) {
+            if (explosion_images[i].image) {
+                Decode_Data(&explosion_images[i]);
+            }
+        }
+    }
+
+    // Load only the enemy image for current stage
+    if (stage >= 0 && stage < MAX_ENEMY_STAGES) {
+        // Use switch for better Borland C++ compatibility
+        switch (stage) {
+            case 0: Load_Pcx("HANULSO.PCX", &enemy_images[stage]); break;
+            case 1: Load_Pcx("PCKID.PCX", &enemy_images[stage]); break;
+            case 2: Load_Pcx("DOSNAVI.PCX", &enemy_images[stage]); break;
+            case 3: Load_Pcx("MOONLORD.PCX", &enemy_images[stage]); break;
+            case 4: Load_Pcx("KINOPIO.PCX", &enemy_images[stage]); break;
+            case 5: Load_Pcx("JEOPGONG.PCX", &enemy_images[stage]); break;
+            case 6: Load_Pcx("DARWIN.PCX", &enemy_images[stage]); break;
+            case 7: Load_Pcx("WINKLE.PCX", &enemy_images[stage]); break;
+            case 8: Load_Pcx("BOKRYONG.PCX", &enemy_images[stage]); break;
+            case 9: Load_Pcx("JOBS.PCX", &enemy_images[stage]); break;
+            case 10: Load_Pcx("GRANDPA.PCX", &enemy_images[stage]); break;
+            case 11: Load_Pcx("CONQUOR.PCX", &enemy_images[stage]); break;
+            case 12: Load_Pcx("VOLCANO.PCX", &enemy_images[stage]); break;
+            case 13: Load_Pcx("OSPAGGI.PCX", &enemy_images[stage]); break;
+            case 14: Load_Pcx("OLDPC.PCX", &enemy_images[stage]); break;
+            case 15: Load_Pcx("SHUKA.PCX", &enemy_images[stage]); break;
+            case 16: Load_Pcx("PGONE.PCX", &enemy_images[stage]); break;
+            case 17: Load_Pcx("HACHYA.PCX", &enemy_images[stage]); break;
+            case 18: Load_Pcx("MACDUNG.PCX", &enemy_images[stage]); break;
+            case 19: Load_Pcx("CHO.PCX", &enemy_images[stage]); break;
+        }
+
+        if (enemy_images[stage].image) {
+            Decode_Data(&enemy_images[stage]);
+        }
+
+        current_loaded_stage = stage;
+    }
+}
+
+// Unload stage-specific images to free memory
+void UnloadStageImages() {
+    int i;
+
+    // Free enemy image for current stage
+    if (current_loaded_stage >= 0 && current_loaded_stage < MAX_ENEMY_STAGES) {
+        UnloadImage(&enemy_images[current_loaded_stage]);
+    }
+
+    // Optionally free bullet, turret, and explosion images
+    // (Keep them loaded if switching stages quickly)
+    /*
+    for (i = 0; i < MAX_BULLET_TYPES; i++) {
+        UnloadImage(&bullet_images[i]);
+    }
+    for (i = 0; i < MAX_TURRET_TYPES; i++) {
+        UnloadImage(&turret_images[i]);
+    }
+    for (i = 0; i < MAX_EXPLOSION_FRAMES; i++) {
+        UnloadImage(&explosion_images[i]);
+    }
+    */
+
+    current_loaded_stage = -1;
+}
+
+// Free individual image memory
+void UnloadImage(sprites* img) {
+    if (img && img->image) {
+        // Free the image data
+        // Note: Need to check how SED library frees memory
+        img->image = NULL;
+    }
+}
 
 void InitGameImages() {
     int i;

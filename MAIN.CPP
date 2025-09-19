@@ -4,11 +4,13 @@
 #include <conio.h>
 #include <string.h>
 #include <time.h>
+#include <alloc.h>    // For coreleft(), farcoreleft()
 #include "menu.h"
 #include "help.h"
 #include "gstate.h"
 #include "map.h"
 #include "drawing.h"
+#include "images.h"   // For image management
 #include "STR_KSSM.H"
 
 // 로그 시스템 전역 변수
@@ -41,6 +43,49 @@ void writeLog(const char* message) {
     }
 }
 
+// 메모리 모니터링 함수들
+void checkMemoryStatus(MemoryInfo* info) {
+    if (!info) return;
+
+    info->available_memory = coreleft();
+    info->largest_free_block = farcoreleft();
+    info->used_memory = 640000L - info->available_memory; // 추정치 (640KB - 사용 가능)
+
+    // 사용 가능한 메모리가 50KB 미만이면 임계치
+    info->critical_threshold_reached = (info->available_memory < 51200L);
+}
+
+void logMemoryStatus() {
+    MemoryInfo info;
+    char logBuffer[200];
+
+    checkMemoryStatus(&info);
+
+    sprintf(logBuffer, "Memory Status - Available: %lu bytes, Used: %lu bytes, Largest Free: %lu bytes",
+            info.available_memory, info.used_memory, info.largest_free_block);
+    writeLog(logBuffer);
+
+    if (info.critical_threshold_reached) {
+        writeLog("WARNING: Memory usage critical! Available memory < 50KB");
+    }
+}
+
+int isMemoryCritical() {
+    MemoryInfo info;
+    checkMemoryStatus(&info);
+    return info.critical_threshold_reached;
+}
+
+void freeUnusedResources() {
+    writeLog("Freeing unused resources to prevent memory shortage");
+
+    // 현재 스테이지가 아닌 이미지들 해제
+    UnloadStageImages();
+
+    // 가비지 컬렉션이나 기타 메모리 정리 작업
+    // (DOS에서는 제한적이지만 최대한 활용)
+}
+
 int main() {
   init();
 
@@ -63,7 +108,12 @@ void init() {
   Vga_Plane();
   Load_Font("hangul.fnt","english.fnt");
   Decode_Init(64);
+
   initMap();
+
+  // 메모리 최적화: 필수 이미지만 먼저 로드
+  InitCoreImages();
+  logMemoryStatus();  // 초기 메모리 상태 로깅
 
   // 음악 재생 설정
   Mus_Continue = 1;  // 계속 반복 재생
