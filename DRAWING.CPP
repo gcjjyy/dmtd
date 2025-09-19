@@ -28,7 +28,7 @@ void drawMenu(int selection)
     Printf_Han(title_x, 30, 8, 0, NORMAL_FONT, (char*)title);
 
     // 버전 정보
-    char version[] = "v1.0";
+    char version[] = "v1.1";
     int version_x = 160 - (strlen(version) * 4); // 중앙 정렬
     Printf_Han(version_x, 50, 45, 0, NORMAL_FONT, (char*)version);
 

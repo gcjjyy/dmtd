@@ -26,7 +26,6 @@
 #define GAME_CLEAR_TEXT "게임 클리어!"
 #define GAME_CLEAR_MSG "모든 20개 스테이지 완료!"
 #define PRESS_ESC_KEY "ESC키를 누르세요"
-#define DMTD_VERSION "DMTD v1.0"
 #define MENU_START "게임 시작"
 #define MENU_HELP "도움말"
 #define MENU_EXIT "게임 종료"

@@ -1320,7 +1320,7 @@ void GameManager::addExplosion(float x, float y) {
 float GameManager::getDifficultyDamageMultiplier() {
     switch (CURRENT_DIFFICULTY) {
         case DIFF_EASY:
-            return 10.0f;
+            return 2.0f;
         case DIFF_NORMAL:
             return 1.0f;
         case DIFF_HARD:
