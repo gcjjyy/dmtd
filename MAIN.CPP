@@ -109,7 +109,8 @@ void gameLoop() {
           if (lastState != STATE_GAME_PLAY && lastState != STATE_STAGE_INTRO &&
               lastState != STATE_EXIT_CONFIRM) {
             // 게임 플레이로 처음 진입할 때만 랜덤 선택
-            int availableMusic[] = {0, 1, 2, 4, 7, 9, 10, 11, 12, 13};
+            // int availableMusic[] = {0, 1, 2, 4, 7, 9, 10, 11, 12, 13};
+            int availableMusic[] = {0, 1, 2, 4, 9, 10, 11, 12, 13};  // 7번 제외
             int randomIndex = rand() % 10;
             newMusic = availableMusic[randomIndex];
 
